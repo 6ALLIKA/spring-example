@@ -10,9 +10,11 @@ import spring.model.User;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    @Qualifier(value = "userDaoImpl")
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public User add(User user) {
