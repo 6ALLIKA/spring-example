@@ -40,7 +40,8 @@ public class AppConfig {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
         properties.put("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
-        properties.put("hibernate.use_sql_comments", environment.getProperty("hibernate.use_sql_comments"));
+        properties.put("hibernate.use_sql_comments",
+                environment.getProperty("hibernate.use_sql_comments"));
         properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
 
         factoryBean.setHibernateProperties(properties);
