@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import spring.model.User;
 
@@ -15,6 +16,7 @@ public class UserDaoImpl implements UserDao {
 
     private final SessionFactory sessionFactory;
 
+    @Autowired
     public UserDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -61,6 +63,18 @@ public class UserDaoImpl implements UserDao {
             return movies.getResultList();
         } catch (HibernateException e) {
             throw new RuntimeException("Error retrieving all movies  ", e);
+        }
+    }
+
+    @Override
+    public User get(Long userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery(
+                    "FROM User u WHERE u.id = :userId", User.class);
+            query.setParameter("userId", userId);
+            return query.getSingleResult();
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error retrieving user  ", e);
         }
     }
 }
